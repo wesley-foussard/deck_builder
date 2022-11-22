@@ -21,6 +21,9 @@ const dataMapper = {
 		return result;
 	},
 	async getCardByElement(elem) {
+		// les requêtes sont bonnes, mais le req.query du searchedController
+		//ne passe pas au bont format du coup ça coince à l'execution ici
+		//et je ne trouve pas comment traiter ça correctement
 		if (elem === null) {
 			const query = "SELECT * FROM card WHERE element IS NULL;"
 			try {
