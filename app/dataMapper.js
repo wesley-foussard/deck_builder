@@ -20,37 +20,38 @@ const dataMapper = {
 		}
 		return result;
 	},
-	async getCardByElement(element) {
-		// if (elem === null) {
-		// 	const query = "SELECT * FROM card WHERE element IS NULL;"
-		// 	try {
-		// 		const response = await database.query(query)
-		// 		if (response.rowCount == 1) {
-		// 			result = response.rows[0]
-		// 		}
-		// 	}
-		// 	catch (err) {
-		// 		console.error(err)
-		// 	}
-
-		// }
-		// else {
-		const query = `SELECT * FROM card WHERE element=${element};`
-		console.log(query)
-		let result
-		try {
-			const response = await database.query(query)
-			console.log(response);
-			if (response.rowCount) {
-				console.log(response.rows)
-				// result = response.rows
+	async getCardByElement(elem) {
+		if (elem === null) {
+			const query = "SELECT * FROM card WHERE element IS NULL;"
+			try {
+				const response = await database.query(query)
+				if (response.rowCount == 1) {
+					result = response.rows[0]
+				}
 			}
-		}
-		catch (err) {
-			console.error(err)
-		}
+			catch (err) {
+				console.error(err)
+			}
 
-		// }
+		}
+		else {
+			const query = `SELECT * FROM card WHERE element=$1;`
+			let value = [elem];
+			// console.log(query)
+			let result
+			try {
+				const response = await database.query(query, value)
+				console.log(response);
+				if (response.rowCount) {
+					console.log(response.rows)
+					// result = response.rows
+				}
+			}
+			catch (err) {
+				console.error(err)
+			}
+
+		}
 		return result;
 	}
 }
