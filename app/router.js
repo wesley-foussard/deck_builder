@@ -9,6 +9,8 @@ const cardController = require('./controllers/cardController');
 
 router.get('/', mainController.homePage);
 router.get('/search', searchController.searchPage);
+router.get('/search/:elem', searchController.searchedElementpage);
+
 router.get('/carte/:id', cardController.cardPage);
 
 module.exports = router;
