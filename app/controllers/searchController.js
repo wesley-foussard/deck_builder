@@ -11,7 +11,7 @@ const searchController = {
 		// try {
 		const cards = await dataMapper.getCardByElement(req.query);
 		if (cards) {
-			res.redirect('/')
+			res.redirect('/');
 		}
 	}
 	// catch {
