@@ -32,9 +32,10 @@ const dataMapper = {
 		else {
 
 			//sinon on fait la requête de façon classique
-			text = `SELECT * FROM "card" WHERE "element"=$1`,
-				values = [element];
-			result = await database.query(text, values);
+			text = `SELECT * FROM "card" WHERE "element"=$1`;
+			values = [element];
+			result = await database.query(text, values)
+
 		}
 
 		// const results = await database.query(query);
