@@ -20,44 +20,30 @@ const dataMapper = {
 		}
 		return result;
 	},
-	async getCardByElement(elem) {
-		// les requêtes sont bonnes, mais le req.query du searchedController
-		//ne passe pas au bont format du coup ça coince à l'execution ici
-		//et je ne trouve pas comment traiter ça correctement
-		if (elem === null) {
-			const query = "SELECT * FROM card WHERE element IS NULL;"
-			try {
-				const response = await database.query(query)
-				if (response.rowCount == 1) {
-					result = response.rows[0]
-				}
-			}
-			catch (err) {
-				console.error(err)
-			}
-
+	getCardsByElement: async function (element) {
+		let query;
+		let result;
+		//le piège : si l'élément n'est pas renseigné en BDD, il vaut NULL. Pour effectuer la requête, on utilise les mots-clé IS NULL
+		if (element === 'null') {
+			query = `SELECT * FROM "card" WHERE "element" IS NULL`;
+			result = await database.query(query);
 		}
+
 		else {
-			const query = `SELECT * FROM card WHERE element=$1;`
-			let value = [elem];
-			// console.log(query)
-			let result
-			try {
-				const response = await database.query(query, value)
-				console.log(response);
-				if (response.rowCount) {
-					console.log(response.rows)
-					// result = response.rows
-				}
-			}
-			catch (err) {
-				console.error(err)
-			}
 
+			//sinon on fait la requête de façon classique
+			text = `SELECT * FROM "card" WHERE "element"=$1`,
+				values = [element];
+			result = await database.query(text, values);
 		}
-		return result;
-	}
+
+		// const results = await database.query(query);
+		return result.rows;
+	},
+
+
 }
+
 
 
 module.exports = dataMapper;
